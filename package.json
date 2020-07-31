@@ -18,9 +18,15 @@
   "homepage": "https://github.com/xiaofeng-bm/mini-vue#readme",
   "dependencies": {},
   "devDependencies": {
+    "cz-conventional-changelog": "^3.2.0",
     "html-webpack-plugin": "^4.3.0",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
