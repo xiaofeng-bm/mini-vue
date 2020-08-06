@@ -7,6 +7,6 @@ window.vm = new Vue({
     msg: "hello world",
     html: "<h3>this is v-html</h3>",
     text: "<h3>this is v-text</h3>",
-    value: "",
+    value: "123456",
   },
 });

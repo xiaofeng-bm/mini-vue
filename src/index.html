@@ -6,6 +6,15 @@
   <title>Document</title>
 </head>
 <body>
-  <div id="app"></div>
+  <div id="app">
+    <h1>插值表达式</h1>
+    <div>{{ msg }}</div>
+    <h1>v-html</h1>
+    <div v-html="html"></div>
+    <h1>v-text</h1>
+    <div v-text="text"></div>
+    <h1>v-model</h1>
+    <input type="text" v-model="value">
+  </div>
 </body>
 </html>

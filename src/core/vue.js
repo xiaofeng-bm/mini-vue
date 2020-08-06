@@ -1,5 +1,6 @@
 import { proxy } from "./proxy";
 import { observer } from "./observer";
+import Compiler from "./compiler";
 
 class Vue {
   constructor(options) {
@@ -8,6 +9,8 @@ class Vue {
     this._data = options.data;
     observer(this._data);
     proxy(this);
+    // 编译
+    new Compiler(this);
   }
 }
 

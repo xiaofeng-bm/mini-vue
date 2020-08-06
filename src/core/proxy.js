@@ -1,3 +1,8 @@
+/**
+ * @description:
+ * @param {class}: Vue中的this
+ * @return {type}
+ */
 export function proxy(vm) {
   let data = vm._data;
   Object.keys(data).forEach((key) => {
