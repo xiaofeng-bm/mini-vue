@@ -1,3 +1,6 @@
+import Watcher from './watcher';
+
+
 // 这里为啥用class类，而不写成普通函数，后面会说明
 class Compiler {
   constructor(vm) {
@@ -41,13 +44,6 @@ class Compiler {
         attrName = attrName.substring(2);
         // 通过下面这个函数处理，就不用写那么多的if判断了
         this.update(node, key, attrName);
-        // if(attrName === 'v-html') {
-        //   this.htmlUpdater(node, this.vm[key]);
-        // } else if(attrName === 'v-text') {
-        //   this.textUpdater(node, this.vm[key])
-        // } else if(attrName === 'v-model') {
-        //   this.modelUpdater(node, this.vm[key])
-        // }
       }
     });
   }
@@ -65,6 +61,10 @@ class Compiler {
       let key = RegExp.$1.trim(); // key = msg;
       // 这里用replace直接替换为Vue实例中msg实际的值，通过this.vm[key]='hello world'
       node.textContent = value.replace(reg, this.vm[key]);
+
+      new Watcher(this.vm, key, (newValue) => {
+        node.textContent = newValue;
+      })
     }
   }
   // 更新函数(画重点)
@@ -75,15 +75,22 @@ class Compiler {
     // 这样做的好处是，你有新的指令，complieElement根本不用动，
     // 你只需要按照规则添加新的指令解析函数就行，保持了设计模式种的开放封闭原则。
     let updateFn = this[attrName + "Updater"];
-    updateFn && updateFn(node, this.vm[key]);
+    updateFn && updateFn.call(this, node, this.vm[key], key);
   }
   // 更新v-html
-  htmlUpdater(node, value) {
+  htmlUpdater(node, value, key) {
     node.innerHTML = value;
+    new Watcher(this.vm, key, (newValue) => {
+      console.log('newValue=', newValue)
+      node.innerHTML = newValue;
+    })
   }
   // 更新v-text
-  textUpdater(node, value) {
+  textUpdater(node, value, key) {
     node.textContent = value;
+    new Watcher(this.vm, key, (newValue) => {
+      node.textContent = newValue;
+    })
   }
   // 更新v-model
   modelUpdater(node, value) {
