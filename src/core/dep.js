@@ -7,16 +7,16 @@ class Dep {
   // 添加观察者
   addSub(sub) {
     // sub存在，并且挂有一个update的方法
-    if(sub && sub.update) {
-      this.subs.push(sub)
+    if (sub && sub.update) {
+      this.subs.push(sub);
     }
   }
 
   // 发送通知
   notify() {
-    this.subs.forEach(sub => {
+    this.subs.forEach((sub) => {
       sub.update();
-    })
+    });
   }
 }
 

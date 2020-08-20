@@ -93,8 +93,17 @@ class Compiler {
     })
   }
   // 更新v-model
-  modelUpdater(node, value) {
+  modelUpdater(node, value, key) {
     node.value = value;
+
+    new Watcher(this.vm, key, (newValue) => {
+      node.value = newValue;
+    })
+
+    // 给input添加input监听函数。当监听到输入后，动态更新data中的值
+    node.addEventListener('input', () => {
+      this.vm[key] = node.value;
+    })
   }
 
   // 是否为元素指令
